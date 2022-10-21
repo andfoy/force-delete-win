@@ -28,7 +28,8 @@ fn force_delete_file_py(path: OsString) -> PyResult<bool> {
 
 /// A Python module implemented in Rust.
 #[pymodule]
-fn force_delete_win(_py: Python, m: &PyModule) -> PyResult<()> {
+#[pyo3(name = "force_delete_win")]
+fn python(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(force_delete_file_py, m)?)?;
     Ok(())
 }

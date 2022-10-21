@@ -10,7 +10,7 @@ readme = "README.md"
 edition = "2021"
 
 [lib]
-name = "python"
+name = "force_delete_win"
 crate-type = ["cdylib"]
 
 [dependencies]

@@ -69,7 +69,7 @@ mod tests {
             ShellExecuteW(None, None, path_pwstr, None, None, SW_SHOWNORMAL);
         }
 
-        let ten_millis = time::Duration::from_millis(1000);
+        let ten_millis = time::Duration::from_millis(5000);
         thread::sleep(ten_millis);
 
         unsafe {
