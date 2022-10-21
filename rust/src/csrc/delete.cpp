@@ -124,7 +124,8 @@ void force_delete_file(rust::Vec<uint16_t> fname) {
 
         /* Query the object name (unless it has an access of
         0x0012019f, on which NtQueryObject could hang. */
-        if (handle.GrantedAccess == 0x0012019f || handle.GrantedAccess == 0x001a019f || handle.GrantedAccess == 0x00120189 || handle.GrantedAccess == 0x0016019f || handle.GrantedAccess == 0x00120089) {
+
+        if ((handle.GrantedAccess & 0x120089) == 0x120089 || handle.GrantedAccess == 0x0012019f || handle.GrantedAccess == 0x001a019f || handle.GrantedAccess == 0x00120189 || handle.GrantedAccess == 0x0016019f || handle.GrantedAccess == 0x00120089) {
             /* We have the type, so display that. */
             // printf(
             //     "[%#x] %.*S: (did not get name)\n",
