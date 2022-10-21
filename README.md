@@ -10,7 +10,7 @@ This function will close all the handles of all the processes that have opened t
 
 For now, our package is only installable directly from source,
 
-```
+```toml
 [dependencies]
 force_delete_win = { git = "https://github.com/andfoy/force-delete-win" }
 ```
