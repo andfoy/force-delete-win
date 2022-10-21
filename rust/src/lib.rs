@@ -50,6 +50,8 @@ pub fn force_delete_file_folder(fname: OsString) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::process::Command;
+    use std::os::windows::process::CommandExt;
     use windows::Win32::Storage::FileSystem::{CreateFileW, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, FILE_ACCESS_FLAGS, FILE_SHARE_MODE};
     use windows::Win32::System::SystemServices::{GENERIC_WRITE, GENERIC_READ};
     use windows::Win32::UI::Shell::ShellExecuteW;
@@ -64,6 +66,18 @@ mod tests {
         let tmp_path = OsString::from(tmp_dir.path().as_os_str());
         let path_vec: Vec<u16> = tmp_path.encode_wide().collect();
         let path_pwstr = PCWSTR(path_vec.as_ptr());
+
+        match Command::new("cmd.exe")
+        .raw_arg("/c")
+        .raw_arg("start")
+        .raw_arg("cmd")
+        .current_dir(tmp_dir.path().to_str().unwrap())
+        .spawn() {
+            Ok(_child) => {
+                println!("Correct");
+            },
+            Err(err) => println!("{}", err)
+        }
 
         unsafe {
             ShellExecuteW(None, None, path_pwstr, None, None, SW_SHOWNORMAL);
