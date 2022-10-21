@@ -24,7 +24,7 @@ jobs:
               components: rustfmt, clippy
           - name: Cargo build
             shell: bash -l {0}
-            run: cargo build -vv --features conpty --features winpty
+            run: cargo build -vv
           - name: Cargo publish
             shell: bash -l {0}
             run: cargo publish --token ${{ secrets.CARGO_REGISTRY_TOKEN }}

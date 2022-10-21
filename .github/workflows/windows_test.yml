@@ -45,14 +45,14 @@ jobs:
             run: cargo clippy
           - name: Cargo build
             shell: bash -l {0}
-            run: cargo build -vv --features conpty --features winpty
+            run: cargo build -vv
           - name: Set LLVM_PROFILE_FILE
             if: ${{ matrix.RUST_TOOLCHAIN == 'nightly' }}
             shell: bash -l {0}
-            run: echo "LLVM_PROFILE_FILE=winpty_rs-%p-%m.profraw" >> $GITHUB_ENV
+            run: echo "LLVM_PROFILE_FILE=force_delete-%p-%m.profraw" >> $GITHUB_ENV
           - name: Cargo test
             shell: bash -l {0}
-            run: cargo test --features conpty --features winpty -- --test-threads=1
+            run: cargo test
           - name: Gather test coverage
             if: ${{ matrix.RUST_TOOLCHAIN == 'nightly' }}
             shell: bash -l {0}
