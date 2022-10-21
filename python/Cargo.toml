@@ -1,0 +1,18 @@
+[package]
+name = "force-delete-win-py"
+version = "0.1.0"
+authors = ["Edgar Andrés Margffoy Tuay <andfoy@gmail.com>", "Stephannie Jimenez Gacha <steff456@hotmail.com>"]
+description = "Force-delete a file or folder held by other Windows processes."
+repository = "https://github.com/andfoy/force-delete-win"
+license = "MIT"
+keywords = ["windows", "delete", "force", "folder", "file"]
+readme = "README.md"
+edition = "2021"
+
+[lib]
+name = "python"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.17.1", features = ["extension-module"] }
+force-delete-win = { path = "../rust" }

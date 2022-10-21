@@ -20,6 +20,7 @@ force_delete_win = { git = "https://github.com/andfoy/force-delete-win" }
 For using this package please do,
 
 ```rust
+use std::ffi::OsString;
 use force_delete_win::force_delete_file_folder;
 
 fn my_func() -> Result<bool, String>{

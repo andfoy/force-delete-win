@@ -26,7 +26,7 @@ use native::force_delete::force_delete_file;
 /// * `fname` - Full path to the file or folder to force-delete.
 ///
 /// # Returns
-/// `true` if the call was successful, else an error will be returned.
+/// `true` if the call was successful, `false` otherwise.
 ///
 /// # Notes
 /// This function will close all the handles of all the processes that have
