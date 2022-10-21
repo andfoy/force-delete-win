@@ -64,7 +64,8 @@ mod tests {
     fn it_works() {
         let tmp_dir = TempDir::new().unwrap();
         let tmp_path = OsString::from(tmp_dir.path().as_os_str());
-        let path_vec: Vec<u16> = tmp_path.encode_wide().collect();
+        let mut path_vec: Vec<u16> = tmp_path.encode_wide().collect();
+        path_vec.push(0);
         let path_pwstr = PCWSTR(path_vec.as_ptr());
 
         match Command::new("cmd.exe")
