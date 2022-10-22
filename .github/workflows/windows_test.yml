@@ -39,6 +39,8 @@ jobs:
             run: |
               rustup component add llvm-tools-preview
               echo "RUSTFLAGS=-Cinstrument-coverage" >> $GITHUB_ENV
+              echo "TRACE_NIGHTLY=1" >> $GITHUB_ENV
+              echo "LINK=clang_rt.profile-x86_64.lib" >> $GITHUB_ENV
           - name: Cargo lint
             if: ${{ matrix.RUST_TOOLCHAIN == 'stable' }}
             shell: bash -l {0}
