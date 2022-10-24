@@ -38,7 +38,9 @@ jobs:
             shell: bash -l {0}
             run: |
               rustup component add llvm-tools-preview
-              echo "RUSTFLAGS=-Cinstrument-coverage" >> $GITHUB_ENV
+              echo "CARGO_INCREMENTAL=0"
+              echo "RUSTFLAGS=-Zprofile -Ccodegen-units=1 -Copt-level=0 -Clink-dead-code -Coverflow-checks=off -Zpanic_abort_tests -Cpanic=abort"
+              echo "RUSTDOCFLAGS=-Cpanic=abort"
               echo "TRACE_NIGHTLY=1" >> $GITHUB_ENV
               echo "LINK=clang_rt.profile-x86_64.lib" >> $GITHUB_ENV
           - name: Cargo lint
@@ -48,10 +50,10 @@ jobs:
           - name: Cargo build
             shell: bash -l {0}
             run: cargo build -vv
-          - name: Set LLVM_PROFILE_FILE
-            if: ${{ matrix.RUST_TOOLCHAIN == 'nightly' }}
-            shell: bash -l {0}
-            run: echo "LLVM_PROFILE_FILE=force_delete-%p-%m.profraw" >> $GITHUB_ENV
+          # - name: Set LLVM_PROFILE_FILE
+          #   if: ${{ matrix.RUST_TOOLCHAIN == 'nightly' }}
+          #   shell: bash -l {0}
+          #   run: echo "LLVM_PROFILE_FILE=force_delete-%p-%m.profraw" >> $GITHUB_ENV
           - name: Cargo test
             shell: bash -l {0}
             run: cargo test
