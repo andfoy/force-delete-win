@@ -61,9 +61,10 @@ jobs:
             if: ${{ matrix.RUST_TOOLCHAIN == 'nightly' }}
             shell: bash -l {0}
             run: |
+              mkdir cov_files
               find . \( -name "*.gc*" \) -print
-              zip -0 ccov.zip `find . \( -name "*.gc*" \) -print`;
-              grcov ccov.zip -s . -t lcov --llvm --branch --ignore-not-existing --ignore "/*" -o lcov.info
+              cp $(`find . \( -name "*.gc*" \) -print` | xargs) cov_files
+              grcov --binary-path ./cov_files -s . -t lcov --llvm --branch --ignore-not-existing --ignore "/*" -o lcov.info
               ls
           - name: Upload coverage results
             uses: codecov/codecov-action@v3
