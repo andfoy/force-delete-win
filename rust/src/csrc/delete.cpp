@@ -11,13 +11,11 @@
 #include <map>
 
 
-static device_map* drives = new device_map();
-
-
 void force_delete_file(rust::Vec<uint16_t> fname) {
 
     PCWSTR fname_pcwstr = PCWSTR(fname.data());
     auto fname_wstr = std::wstring(fname_pcwstr);
+    device_map* drives = new device_map();
     auto drives_map = drives->get_map();
 
     typedef NTSTATUS(NTAPI* _NtQuerySystemInformation)(
