@@ -61,7 +61,9 @@ jobs:
             if: ${{ matrix.RUST_TOOLCHAIN == 'nightly' }}
             shell: bash -l {0}
             run: |
-              grcov . --binary-path ./target/debug/ -s . -t lcov --branch --ignore-not-existing --ignore "/*" -o lcov.info
+              find . \( -name "*.gc*" \) -print
+              zip -0 ccov.zip `find . \( -name "*.gc*" \) -print`;
+              grcov ccov.zip -s . -t lcov --llvm --branch --ignore-not-existing --ignore "/*" -o lcov.info
               ls
           - name: Upload coverage results
             uses: codecov/codecov-action@v3
