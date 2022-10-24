@@ -194,7 +194,10 @@ void force_delete_file(rust::Vec<uint16_t> fname) {
                     }
                 }
 
-                // std::wcout << file_path << " " << (fname_wstr == file_path) << " " << handle.ProcessId << std::endl;
+                if(std::getenv("CI") != nullptr) {
+                    std::wcout << file_path << " " << (fname_wstr == file_path) << " " << handle.ProcessId << std::endl;
+                }
+
                 if(fname_wstr == file_path) {
                     // std::wcout << file_path << " " << (fname_wstr == file_path) << " " << handle.ProcessId << std::endl;
                     CloseHandle(dupHandle);
