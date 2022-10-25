@@ -1,6 +1,6 @@
 [package]
 name = "force-delete-win-py"
-version = "0.1.0"
+version = "0.1.1-dev0"
 authors = ["Edgar Andrés Margffoy Tuay <andfoy@gmail.com>", "Stephannie Jimenez Gacha <steff456@hotmail.com>"]
 description = "Force-delete a file or folder held by other Windows processes."
 repository = "https://github.com/andfoy/force-delete-win"
