@@ -18,7 +18,8 @@ jobs:
       strategy:
           fail-fast: false
           matrix:
-              RUST_TOOLCHAIN: ["stable", "nightly",]
+              RUST_TOOLCHAIN: ["stable"]
+              # RUST_TOOLCHAIN: ["stable", "nightly",]
       steps:
           - name: Checkout branch
             uses: actions/checkout@v3
@@ -38,7 +39,11 @@ jobs:
             shell: bash -l {0}
             run: |
               rustup component add llvm-tools-preview
-              echo "RUSTFLAGS=-Cinstrument-coverage" >> $GITHUB_ENV
+              echo "CARGO_INCREMENTAL=0"
+              echo "RUSTFLAGS=-Zprofile -Ccodegen-units=1 -Copt-level=0 -Clink-dead-code -Coverflow-checks=off -Zpanic_abort_tests -Cpanic=abort"
+              echo "RUSTDOCFLAGS=-Cpanic=abort"
+              echo "TRACE_NIGHTLY=1" >> $GITHUB_ENV
+              echo "LINK=clang_rt.profile-x86_64.lib" >> $GITHUB_ENV
           - name: Cargo lint
             if: ${{ matrix.RUST_TOOLCHAIN == 'stable' }}
             shell: bash -l {0}
@@ -46,10 +51,10 @@ jobs:
           - name: Cargo build
             shell: bash -l {0}
             run: cargo build -vv
-          - name: Set LLVM_PROFILE_FILE
-            if: ${{ matrix.RUST_TOOLCHAIN == 'nightly' }}
-            shell: bash -l {0}
-            run: echo "LLVM_PROFILE_FILE=force_delete-%p-%m.profraw" >> $GITHUB_ENV
+          # - name: Set LLVM_PROFILE_FILE
+          #   if: ${{ matrix.RUST_TOOLCHAIN == 'nightly' }}
+          #   shell: bash -l {0}
+          #   run: echo "LLVM_PROFILE_FILE=force_delete-%p-%m.profraw" >> $GITHUB_ENV
           - name: Cargo test
             shell: bash -l {0}
             run: cargo test
@@ -57,7 +62,10 @@ jobs:
             if: ${{ matrix.RUST_TOOLCHAIN == 'nightly' }}
             shell: bash -l {0}
             run: |
-              grcov . --binary-path ./target/debug/ -s . -t lcov --branch --ignore-not-existing --ignore "/*" -o lcov.info
+              mkdir cov_files
+              find . \( -name "*.gc*" \) -print
+              find . -name "*.gc*" -exec cp {} $PWD/cov_files \;
+              grcov ./cov_files -s . -t lcov --llvm --branch --ignore-not-existing --ignore "/*" -o lcov.info
               ls
           - name: Upload coverage results
             uses: codecov/codecov-action@v3

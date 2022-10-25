@@ -1,46 +1,5 @@
-[package]
-name = "force-delete-win"
-version = "0.1.0-pre0"
-edition = "2021"
-links = "close_file"
-license = "MIT OR Apache-2.0"
-description = "Force-delete a file or folder held by other Windows processes"
-homepage = "https://github.com/andfoy/force-delete-win"
-readme = "README.md"
-repository = "https://github.com/andfoy/force-delete-win"
-keywords = ["windows", "delete", "force", "folder", "file"]
-
-[dependencies.windows]
-version = "0.42.0"
-features = [
-    "Win32_Foundation",
-    "Win32_Storage_FileSystem",
-    "Win32_System_IO",
-    "Win32_System_Pipes"
+[workspace]
+members = [
+    "rust",
+    "python"
 ]
-
-[dependencies]
-cxx = "1.0"
-
-[build-dependencies]
-cxx-build = "1.0"
-
-[dev-dependencies]
-tempfile = "3.3.0"
-
-[dev-dependencies.windows]
-version = "0.42.0"
-features = [
-    "Win32_Foundation",
-    "Win32_Storage_FileSystem",
-    "Win32_System_IO",
-    "Win32_System_Pipes",
-    "Win32_UI_Shell",
-    "Win32_UI_WindowsAndMessaging",
-    "Win32_Security",
-    "Win32_System_SystemServices"
-]
-
-[lib]
-name = "force_delete_win"
-path = "src/lib.rs"

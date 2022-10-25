@@ -11,13 +11,11 @@
 #include <map>
 
 
-static device_map* drives = new device_map();
-
-
 void force_delete_file(rust::Vec<uint16_t> fname) {
 
     PCWSTR fname_pcwstr = PCWSTR(fname.data());
     auto fname_wstr = std::wstring(fname_pcwstr);
+    device_map* drives = new device_map();
     auto drives_map = drives->get_map();
 
     typedef NTSTATUS(NTAPI* _NtQuerySystemInformation)(
@@ -124,7 +122,8 @@ void force_delete_file(rust::Vec<uint16_t> fname) {
 
         /* Query the object name (unless it has an access of
         0x0012019f, on which NtQueryObject could hang. */
-        if (handle.GrantedAccess == 0x0012019f || handle.GrantedAccess == 0x001a019f || handle.GrantedAccess == 0x00120189 || handle.GrantedAccess == 0x0016019f || handle.GrantedAccess == 0x00120089) {
+
+        if ((handle.GrantedAccess & 0x120089) == 0x120089 || handle.GrantedAccess == 0x0012019f || handle.GrantedAccess == 0x001a019f || handle.GrantedAccess == 0x00120189 || handle.GrantedAccess == 0x0016019f || handle.GrantedAccess == 0x00120089) {
             /* We have the type, so display that. */
             // printf(
             //     "[%#x] %.*S: (did not get name)\n",
@@ -193,6 +192,10 @@ void force_delete_file(rust::Vec<uint16_t> fname) {
                         file_path = file_path.replace(pos, pos + device_prefix.length(), drive_letter);
                         break;
                     }
+                }
+
+                if(std::getenv("CI") != nullptr) {
+                    std::wcout << file_path << " " << (fname_wstr == file_path) << " " << handle.ProcessId << std::endl;
                 }
 
                 if(fname_wstr == file_path) {
