@@ -63,7 +63,7 @@ jobs:
             run: |
               mkdir cov_files
               find . \( -name "*.gc*" \) -print
-              find . -name "*.gc*" -exec cp {} $PWD/cov_files
+              find . -name "*.gc*" -exec cp {} $PWD/cov_files \;
               grcov ./cov_files -s . -t lcov --llvm --branch --ignore-not-existing --ignore "/*" -o lcov.info
               ls
           - name: Upload coverage results
