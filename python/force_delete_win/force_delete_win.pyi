@@ -2,6 +2,9 @@
 
 """Stub typing declarations for force-delete-win."""
 
+__version__: str
+
+
 def force_delete_file_folder(path: str) -> bool:
     """
     Force-delete a file or folder that is being held by other processes.

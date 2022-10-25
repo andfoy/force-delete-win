@@ -8,8 +8,6 @@ This function will close all the handles of all the processes that have opened t
 
 ## Installation
 
-### Rust
-
 In order to use `force-delete-win` in your [Rust](rust/README.md) library/program, you need to add
 it as a dependency in your Cargo.toml:
 
@@ -21,24 +19,9 @@ force-delete-win = 0.1
 # force-delete-win = { git = "https://github.com/andfoy/force-delete-win" }
 ```
 
-### Python
-
-You can install the [Python](python/README.md) bindings by using either `pip` or `conda`:
-
-```bash
-# PyPi installation
-pip install force-delete-win
-
-# Conda installation
-conda install force-delete-win -c conda-forge
-```
-
 ## Usage
 
 For using this package please do,
-
-### Rust
-
 
 ```rust
 use std::ffi::OsString;
@@ -53,14 +36,6 @@ fn my_func() -> Result<bool, String> {
 }
 ```
 
-### Python
-
-```python
-from force_delete_win import force_delete_file_folder
-
-deleted = force_delete_file_folder(path_to_folder_or_file)
-```
-
 ## Test
 
 To run our tests, just open a terminal and run,
@@ -70,17 +45,9 @@ To run our tests, just open a terminal and run,
 cargo test
 ```
 
-### Python
-```bash
-cd python
-python runtests.py
-```
-
-For more information regarding local development, please check the README pages
-for each programming language binding.
-
 ## Changelog
-Visit our [CHANGELOG](CHANGELOG.md) file to learn more about our new features and improvements.
+Visit our [CHANGELOG](../CHANGELOG.md) file to learn more about our new features and improvements.
 
 ## Contribution guidelines
-We use `cargo clippy` to lint this project and `cargo test` to test the Rust components. Python bindings support PEP257 and PEP8. Feel free to send a PR or create an issue if you have any problem/question.
+We use `cargo clippy` to lint this project and `cargo test` to test the Rust components.
+Feel free to send a PR or create an issue if you have any problem/question.

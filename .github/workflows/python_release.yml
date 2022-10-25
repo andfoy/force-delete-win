@@ -48,11 +48,15 @@ jobs:
                 MATURIN_PASSWORD: ${{secrets.MATURIN_PASSWORD}}
                 MATURIN_USERNAME: ${{secrets.MATURIN_USERNAME}}
               shell: bash -l {0}
-              run: maturin publish -i $(which python) -u $MATURIN_USERNAME
+              run: |
+                cd python
+                maturin publish -i $(which python) -u $MATURIN_USERNAME
             - name: Build and publish wheels
               if: ${{ matrix.PYTHON_VERSION != '3.10' }}
               env:
                 MATURIN_PASSWORD: ${{secrets.MATURIN_PASSWORD}}
                 MATURIN_USERNAME: ${{secrets.MATURIN_USERNAME}}
               shell: bash -l {0}
-              run: maturin publish -i $(which python) -u $MATURIN_USERNAME --no-sdist
+              run: |
+                cd python
+                maturin publish -i $(which python) -u $MATURIN_USERNAME --no-sdist
